@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<project name="Flash2createjs compress project" basedir="." default="createjsCompile">
+    <taskdef name="CompressionPNG" classname="org.flash2x.CompressionPNG" classpath="${basedir}/tools/flash2x.jar"/>
+    <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"
+             classpath="${basedir}/tools/compiler.jar"/>
+    <target name="createjsCompile">
+        <delete dir="${basedir}/released"/>
+        <copy toDir="${basedir}/released/">
+            <fileset dir="${basedir}">
+                <include name="libs/**/*.js" />
+                <include name="index.html" />
+                <include name="resource/**/*" />
+            </fileset>
+        </copy>
+        <!-- 先替换掉空拍及换行-->
+        <replaceregexp encoding="utf-8" flags="g"  byline="false">
+            <regexp pattern='[\s\r\n\t]+'/>
+            <substitution expression="" />
+            <fileSet dir="${basedir}/released">
+                <include name="resource/*/*.res.json"/>
+            </fileSet>
+        </replaceregexp>
+        <!-- 再来将合并后多于的js文件引用去掉-->
+        <replaceregexp encoding="utf-8" flags="g"  byline="true">
+            <regexp pattern=',?\{"src":"src\/.*?","type":"javascript"\}'/>
+            <substitution expression="" />
+            <fileSet dir="${basedir}/released">
+                <include name="resource/*/*.res.json"/>
+            </fileSet>
+        </replaceregexp>
+        <replaceregexp encoding="utf-8" flags="g"  byline="true">
+            <regexp pattern='\[,'/>
+            <substitution expression="[" />
+            <fileSet dir="${basedir}/released">
+                <include name="resource/*/*.res.json"/>
+            </fileSet>
+        </replaceregexp>
+        <replaceregexp encoding="utf-8" flags="g"  byline="true">
+            <regexp pattern=',\]'/>
+            <substitution expression="]" />
+            <fileSet dir="${basedir}/released">
+                <include name="resource/*/*.res.json"/>
+            </fileSet>
+        </replaceregexp>
+        <CompressionPNG binPath="${basedir}/tools/pngquant" params="--ext=.png --force">
+            <fileSet dir="${basedir}/released">
+                <include name="resource/**/*.png"/>
+            </fileSet>
+        </CompressionPNG>
+        <jscomp compilationLevel="simple" warning="quiet"
+                debug="false" output="${basedir}/released/src/Main.js">
+            <sources dir="${basedir}/src">
+                <file name="Main.js"/>
+            </sources>
+        </jscomp>
+		<jscomp compilationLevel="simple" warning="quiet" debug="false" output="${basedir}/released/src/loading/Loading.js">
+			<sources dir="${basedir}">
+				<!--need_package_loading-->
+				<file name="src/loading/loadingAuto.js"/>
+				<file name="src/loading/Loading.js"/>
+				<file name="src/loading/Home.js"/>
+			</sources>
+		</jscomp>
+		<jscomp compilationLevel="simple" warning="quiet" debug="false" output="${basedir}/released/src/pageHome/PageHome.js">
+			<sources dir="${basedir}">
+				<!--need_package_pageHome-->
+				<file name="src/pageHome/pageHomeAuto.js"/>
+				<file name="src/pageHome/PageHome.js"/>
+				<file name="src/pageHome/Btn_music.js"/>
+				<file name="src/pageHome/Home.js"/>
+				<file name="src/pageHome/RLOGO.js"/>
+				<file name="src/pageHome/LLOGO.js"/>
+			</sources>
+		</jscomp>
+		<jscomp compilationLevel="simple" warning="quiet" debug="false" output="${basedir}/released/src/star/Star.js">
+			<sources dir="${basedir}">
+				<!--need_package_star-->
+				<file name="src/star/starAuto.js"/>
+				<file name="src/star/Star.js"/>
+				<file name="src/star/Round.js"/>
+				<file name="src/star/Home.js"/>
+			</sources>
+		</jscomp>
+		<jscomp compilationLevel="simple" warning="quiet" debug="false" output="${basedir}/released/src/result/Result.js">
+			<sources dir="${basedir}">
+				<!--need_package_result-->
+				<file name="src/result/resultAuto.js"/>
+				<file name="src/result/Result.js"/>
+				<file name="src/result/ShareTip.js"/>
+				<file name="src/result/Title.js"/>
+				<file name="src/result/Title_txt.js"/>
+				<file name="src/result/Home.js"/>
+				<file name="src/result/Text.js"/>
+				<file name="src/result/Person.js"/>
+			</sources>
+		</jscomp>
+		<jscomp compilationLevel="simple" warning="quiet" debug="false" output="${basedir}/released/src/selectTopic/SelectTopic.js">
+			<sources dir="${basedir}">
+				<!--need_package_selectTopic-->
+				<file name="src/selectTopic/selectTopicAuto.js"/>
+				<file name="src/selectTopic/SelectTopic.js"/>
+				<file name="src/selectTopic/Btn_topic8.js"/>
+				<file name="src/selectTopic/Btn_topic6.js"/>
+				<file name="src/selectTopic/Btn_topic3.js"/>
+				<file name="src/selectTopic/Btn_topic2.js"/>
+				<file name="src/selectTopic/Btn_topic4.js"/>
+				<file name="src/selectTopic/Btn_topic5.js"/>
+				<file name="src/selectTopic/Btn_topic7.js"/>
+				<file name="src/selectTopic/Btn_topic1.js"/>
+				<file name="src/selectTopic/Home.js"/>
+				<file name="src/selectTopic/Btns_topic.js"/>
+			</sources>
+		</jscomp>
+		<jscomp compilationLevel="simple" warning="quiet" debug="false" output="${basedir}/released/src/topic/Topic.js">
+			<sources dir="${basedir}">
+				<!--need_package_topic-->
+				<file name="src/topic/topicAuto.js"/>
+				<file name="src/topic/Topic.js"/>
+				<file name="src/topic/Choice_box.js"/>
+				<file name="src/topic/Photo.js"/>
+				<file name="src/topic/D.js"/>
+				<file name="src/topic/C.js"/>
+				<file name="src/topic/B.js"/>
+				<file name="src/topic/A.js"/>
+				<file name="src/topic/Topic_txt.js"/>
+				<file name="src/topic/Home.js"/>
+				<file name="src/topic/Title.js"/>
+				<file name="src/topic/Title_txt.js"/>
+			</sources>
+		</jscomp>
+	</target>
+</project>
