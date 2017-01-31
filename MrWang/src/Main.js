@@ -117,32 +117,34 @@ var globalVal = {
                 globalVal.stage.children[0].home.plan.txt.text = per + "%";
                 globalVal.stage.children[0].home.plan_bar.gotoAndStop(per);
             }
-        },function(){
-            //加载完成
-            if(str == "loading"){
-                globalVal.onLoadScene(["pageHome","star","selectTopic","topic","result"]);
-                globalVal.stage.addChild(new loading.Loading());
-            }else{
-                globalVal.music = Flash2x.getMediaByName("pageHome","BgMusic");
-                globalVal.music.play(0,1000);
-                globalVal.stage.removeAllChildren();
-                Flash2x.getMediaByName("loading","ChangePageSound").play(0,1);
-                globalVal.stage.addChild(new pageHome.PageHome());
-                var music=new pageHome.Btn_music();
-                music.x=680;
-                music.y=62;
-                globalVal.stageTop.addChild(music);
-                globalVal.specialMusic = Flash2x.getMediaByName("topic","SpecialSound");
-                var rLogo_mc=new pageHome.RLOGO();
-                var lLogo_mc=new pageHome.LLOGO();
-                lLogo_mc.x=globalVal.stageTop.viewRect.x+10;
-                lLogo_mc.y=18;
-                rLogo_mc.x=870-globalVal.stageTop.viewRect.x-218;
-                rLogo_mc.y=10;
-                globalVal.stageTop.addChild(lLogo_mc);
-                globalVal.stageTop.addChild(rLogo_mc);
-                globalVal.lLogo_mc=lLogo_mc;
-                globalVal.rLogo_mc=rLogo_mc;
+        },function(result){
+            if(result.sceneId==result.sceneTotal) {
+                //加载完成
+                if (str == "loading") {
+                    globalVal.onLoadScene(["pageHome", "star", "selectTopic", "topic", "result"]);
+                    globalVal.stage.addChild(new loading.Loading());
+                } else {
+                    globalVal.music = Flash2x.getMediaByName("pageHome", "BgMusic");
+                    globalVal.music.play(0, 1000);
+                    globalVal.stage.removeAllChildren();
+                    Flash2x.getMediaByName("loading", "ChangePageSound").play(0, 1);
+                    globalVal.stage.addChild(new pageHome.PageHome());
+                    var music = new pageHome.Btn_music();
+                    music.x = 680;
+                    music.y = 62;
+                    globalVal.stageTop.addChild(music);
+                    globalVal.specialMusic = Flash2x.getMediaByName("topic", "SpecialSound");
+                    var rLogo_mc = new pageHome.RLOGO();
+                    var lLogo_mc = new pageHome.LLOGO();
+                    lLogo_mc.x = globalVal.stageTop.viewRect.x + 10;
+                    lLogo_mc.y = 18;
+                    rLogo_mc.x = 870 - globalVal.stageTop.viewRect.x - 218;
+                    rLogo_mc.y = 10;
+                    globalVal.stageTop.addChild(lLogo_mc);
+                    globalVal.stageTop.addChild(rLogo_mc);
+                    globalVal.lLogo_mc = lLogo_mc;
+                    globalVal.rLogo_mc = rLogo_mc;
+                }
             }
         });
     },
