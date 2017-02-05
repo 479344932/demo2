@@ -12,8 +12,8 @@
     用到了全局事件 globalDispatcher 的侦听与接收。
     以及Flash2x.LoadScene分布式加载资源，用到哪个场景时加载哪个场景。
     是大家入门flash2x 不可多得的好例子，希望大家认真学习研究，触类旁通。
-# 使用的Flash2x 工具版本 3.0.1
-# 使用的AnnieJS 引擎版本 1.0.1
+# 使用的Flash2x 工具版本 3.0.5
+# 使用的AnnieJS 引擎版本 1.0.5
 # 使用的打包构建工具 Ant
 # 使用的开发语言 js
 # 使用WebStorm 2016.3 前端开发工具
